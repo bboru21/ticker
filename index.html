@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Ticker</title>
+		
+		<link rel="stylesheet" type="text/css" href="libs/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="libs/css/ticker.css" />
+		
+	</head>
+	<body>
+		
+		<div id="ticker-container">
+	
+			<h1>Ticker</h1>
+			
+			<form class="form-inline" role="form" id="ticker-form">
+				<div class="form-group">
+					<label class="sr-only" for="ticker-name">Task Name</label>
+					<input type="text" class="form-control" id="ticker-name" placeholder="Task Name" />
+				</div>
+				
+				<!--<div class="checkbox">
+					<label>
+						<input id="pause-tickers" type="checkbox" checked="checked"> Pause Existing
+					</label>
+				</div>-->
+				
+				<button type="submit" class="btn btn-default">New Ticker</button>
+			</form>
+			
+		</div>
+		
+		<!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>-->
+		<script src="libs/js/ticker.js"></script>
+		<script>
+			var form = document.getElementById("ticker-form");
+			
+			var button = form.getElementsByTagName("button")[0];
+			button.addEventListener( "click", function(e) { 
+				
+				e.preventDefault();
+				
+				var form = e.target.parentNode;
+				var name = document.getElementById("ticker-name").value;
+				
+				form.reset();
+
+				newTicker(name);
+				return false;
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,10 @@
+#ticker-container {
+	margin:0px auto;
+	width: 500px;
+}
+#ticker-list button {
+	margin: 5px;
+}
+.ticker-duration, .ticker-name {
+	display: inline-block;
+}
