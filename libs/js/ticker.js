@@ -1,12 +1,6 @@
 (function() {
 		
-	var Ticker = function(element, pauseExisting) {
-		
-		if (pauseExisting) {
-			this.each(function() {
-				console.log("looping");
-			});
-		}
+	var Ticker = function(element) {
 		
 		this._element = element;
 		this._duration = 0;
