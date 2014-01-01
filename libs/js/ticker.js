@@ -43,7 +43,7 @@
 		return time;
 	};
 	
-	window.newTicker = function(tickerName) {
+	window.initTicker = function(tickerName) {
 		
 		var list = document.getElementById("ticker-list");
 		if (!list) {
@@ -70,9 +70,10 @@
 		durationContainer.className = "ticker-duration";
 		
 		// name
+		tickerName = tickerName.length===0 ? "" : " - " + tickerName;
 		var nameContainer = document.createElement("h2");
 		nameContainer.className = "ticker-name";
-		nameContainer.appendChild( document.createTextNode(" - " + tickerName));
+		nameContainer.appendChild( document.createTextNode(tickerName));
 		
 		item.appendChild(playButton);
 		item.appendChild(pauseButton);
