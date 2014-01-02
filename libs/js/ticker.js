@@ -49,7 +49,15 @@
 		return time;
 	};
 	
-	window.initTicker = function(tickerName) {
+	var instances = [];
+	
+	window.initTicker = function(tickerName, pauseExisting) {
+		
+		if (pauseExisting) {
+			for(var i = 0, len = instances.length; i < len; i++) {
+				instances[i].pause.call(instances[i]);
+			}
+		}
 		
 		var list = document.getElementById("ticker-list");
 		if (!list) {
@@ -86,6 +94,7 @@
 		clearButton.innerHTML = "&times;";
 		clearButton.className = "ticker-clear close";
 		clearButton.setAttribute("aria-hidden", "true");
+		clearButton.setAttribute("title", "clear");
 		
 		item.appendChild(playButton);
 		item.appendChild(pauseButton);
@@ -103,6 +112,8 @@
 			ticker.clear.call(ticker);
 			ticker = null;
 		}, false);
+		
+		instances.push(ticker);
 	};
 
 }());

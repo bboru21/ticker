@@ -8,3 +8,7 @@
 .ticker-duration, .ticker-name {
 	display: inline-block;
 }
+
+.ticker-clear.close {
+	float: none;
+}
