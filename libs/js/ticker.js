@@ -3,6 +3,7 @@
 	var Ticker = function(element) {
 		
 		this._element = element;
+		this._durationContainer = this._element.getElementsByClassName("ticker-duration")[0];
 		this._duration = 0;
 		this._paused = true;
 		
@@ -17,7 +18,7 @@
 		if (!this._paused) {
 			this._duration++;
 			
-			this._element.innerHTML = this.toHHMMSS( this._duration );
+			this._durationContainer.innerHTML = this.toHHMMSS( this._duration );
 			this._timeout = setTimeout( this.tick.bind(this), 1000);
 		}
 	};
@@ -29,6 +30,11 @@
 	
 	Ticker.prototype.pause = function() {
 		this._paused = true;
+	};
+	
+	Ticker.prototype.clear = function() {
+		this.pause.call(this);
+		this._element.parentNode.removeChild(this._element);
 	};
 	
 	Ticker.prototype.toHHMMSS = function (sec_num) {
@@ -75,17 +81,28 @@
 		nameContainer.className = "ticker-name";
 		nameContainer.appendChild( document.createTextNode(tickerName));
 		
+		// clear button
+		var clearButton = document.createElement("button");
+		clearButton.innerHTML = "&times;";
+		clearButton.className = "ticker-clear close";
+		clearButton.setAttribute("aria-hidden", "true");
+		
 		item.appendChild(playButton);
 		item.appendChild(pauseButton);
 		item.appendChild(durationContainer);
 		item.appendChild(nameContainer);
+		item.appendChild(clearButton);
 		
 		list.insertBefore(item, list.firstChild);
 		
 		// instantiate Ticker and add event listeners
-		var ticker = new Ticker(durationContainer);
+		var ticker = new Ticker(item);
 		playButton.addEventListener("click", ticker.play.bind(ticker), false);
 		pauseButton.addEventListener("click", ticker.pause.bind(ticker), false);
+		clearButton.addEventListener("click", function() {
+			ticker.clear.call(ticker);
+			ticker = null;
+		}, false);
 	};
 
 }());
