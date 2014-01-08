@@ -24,8 +24,10 @@
 	};
 	
 	Ticker.prototype.play = function() {
-		this._paused = false;
-		this.tick.call(this);
+		if (this._paused) {
+			this._paused = false;
+			this.tick.call(this);
+		}
 	};
 	
 	Ticker.prototype.pause = function() {
