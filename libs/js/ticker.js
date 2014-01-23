@@ -1,4 +1,4 @@
-(function() {
+( function() {
 		
 	var Ticker = function(element) {
 		
@@ -55,12 +55,6 @@
 	
 	window.initTicker = function(tickerName, pauseExisting) {
 		
-		if (pauseExisting) {
-			for(var i = 0, len = instances.length; i < len; i++) {
-				instances[i].pause.call(instances[i]);
-			}
-		}
-		
 		var list = document.getElementById("ticker-list");
 		if (!list) {
 			list = document.createElement("ul");
@@ -68,8 +62,19 @@
 			list.className = "list-unstyled";
 			document.getElementById("ticker-container").appendChild(list);
 		}
-
+		
+		if (pauseExisting) {
+			for(var i = 0, len = instances.length; i < len; i++) {
+				instances[i].pause.call(instances[i]);
+			}
+			
+			for(var i = 0, len = list.childNodes.length; i < len; i++) {
+				list.childNodes[i].className = "passive";
+			}
+		}
+		
 		var item = document.createElement("li");
+		item.className = "active";
 		
 		// play button
 		var playButton = document.createElement("button");
@@ -108,8 +113,14 @@
 		
 		// instantiate Ticker and add event listeners
 		var ticker = new Ticker(item);
-		playButton.addEventListener("click", ticker.play.bind(ticker), false);
-		pauseButton.addEventListener("click", ticker.pause.bind(ticker), false);
+		playButton.addEventListener("click", function() {
+			item.className = "active";
+			ticker.play.call(ticker);
+		}, false);
+		pauseButton.addEventListener("click", function() {
+			item.className = "passive";
+			ticker.pause.call(ticker)
+		}, false);
 		clearButton.addEventListener("click", function() {
 			ticker.clear.call(ticker);
 			ticker = null;

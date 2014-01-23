@@ -12,3 +12,13 @@
 .ticker-clear.close {
 	float: none;
 }
+
+#ticker-list li.active {
+	opacity:1.0;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+
+#ticker-list li.passive {
+	opacity:0.5;
+	filter:alpha(opacity=50); /* For IE8 and earlier */
+}
