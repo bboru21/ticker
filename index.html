@@ -41,12 +41,12 @@
 				e.preventDefault();
 				
 				var form = e.target.parentNode;
-				var name = document.getElementById("ticker-name").value;
+				var displayName = document.getElementById("ticker-name").value;
 				var pauseExisting = document.getElementById("pause-tickers").checked;
 				
 				form.reset();
 
-				initTicker(name, pauseExisting);
+				initTicker({"displayName": displayName, "pauseExisting": pauseExisting});
 				return false;
 			}, false);
 		</script>
