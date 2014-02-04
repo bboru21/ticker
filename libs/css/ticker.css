@@ -13,12 +13,17 @@
 	float: none;
 }
 
+#ticker-list li {
+	border-radius: 5px;
+	margin: 5px;
+}
+
 #ticker-list li.active {
-	opacity:1.0;
-	filter:alpha(opacity=100); /* For IE8 and earlier */
+	border: 1px solid #CCC;
+	background-color: transparent;
 }
 
 #ticker-list li.passive {
-	opacity:0.5;
-	filter:alpha(opacity=50); /* For IE8 and earlier */
+	border: 1px dotted #CCC;
+	background-color: #F5F5F5;
 }
