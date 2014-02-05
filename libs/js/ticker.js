@@ -22,8 +22,17 @@
             return s.setItem("ticker", JSON.stringify(ticker));
         },
         "delete": function (name) {
+        
+            console.log("deleting", name);
+        
             var ticker = tickerStorage.getStorageAsObject();
+            
+            console.log("ticker before delete", ticker[name]);
+            
             delete ticker[name];
+            
+            console.log("ticker after delete", ticker[name]);
+            
             return s.setItem("ticker", JSON.stringify(ticker));
         },
         "create": function (name, options) {
@@ -84,6 +93,7 @@
     Ticker.prototype.clear = function () {
         this.pause.call(this);
         this.element.parentNode.removeChild(this.element);
+        
         tickerStorage.delete(this.name);
     };
     
@@ -108,8 +118,12 @@
         options.duration = options.duration || null;
         //options.paused = options.paused || false;
         options.displayName = options.displayName || "";
+        options.name = options.name || null;
+        
 
-        options.name = options.displayName.length === 0 ? "ticker-"+new Date().getTime() : options.displayName.replace(/\s/g,"-").toLowerCase();
+        if (!options.name) {
+            options.name = options.displayName.length === 0 ? "ticker-"+new Date().getTime() : options.displayName.replace(/\s/g,"-").toLowerCase();
+        }
         
         var list = document.getElementById("ticker-list");
         if (!list) {
