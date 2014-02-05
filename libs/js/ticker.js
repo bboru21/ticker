@@ -150,12 +150,12 @@
 		pauseButton.className = "ticker-pause btn btn-danger";
 		
 		// duration
-		var durationContainer = document.createElement("h2");
+		var durationContainer = document.createElement("h3");
 		durationContainer.className = "ticker-duration";
 		if (!!options.duration) { durationContainer.innerHTML = options.duration; }
 		
 		// name
-		var nameContainer = document.createElement("h2");
+		var nameContainer = document.createElement("h3");
 		nameContainer.className = "ticker-name";
 		
 		if (options.displayName.length > 0) { nameContainer.innerHTML = "&nbsp;-&nbsp;"; }
