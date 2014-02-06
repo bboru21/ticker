@@ -116,9 +116,9 @@
         
         var list = document.getElementById("ticker-list");
         if (!list) {
-            list = document.createElement("div");
+            list = document.createElement("ul");
             list.setAttribute("id", "ticker-list");
-            //list.className = "list-unstyled";
+            list.className = "list-unstyled";
             document.getElementById("ticker-container").appendChild(list);
         }
         
@@ -132,7 +132,7 @@
             }
         }
         
-        var item = document.createElement("div");
+        var item = document.createElement("li");
         item.className = "active";
         
         // play button
