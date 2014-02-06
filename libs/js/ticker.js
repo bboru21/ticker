@@ -22,17 +22,10 @@
             return s.setItem("ticker", JSON.stringify(ticker));
         },
         "delete": function (name) {
-        
-            console.log("deleting", name);
-        
-            var ticker = tickerStorage.getStorageAsObject();
-            
-            console.log("ticker before delete", ticker[name]);
-            
+
+            var ticker = tickerStorage.getStorageAsObject();            
             delete ticker[name];
-            
-            console.log("ticker after delete", ticker[name]);
-            
+             
             return s.setItem("ticker", JSON.stringify(ticker));
         },
         "create": function (name, options) {
@@ -49,6 +42,20 @@
         }
     };
     
+    var utils = {
+        "toHHMMSS": function(sec_num) {
+            var hours   = Math.floor(sec_num / 3600);
+            var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+            var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+            if (hours   < 10) {hours   = "0"+hours;}
+            if (minutes < 10) {minutes = "0"+minutes;}
+            if (seconds < 10) {seconds = "0"+seconds;}
+            var time    = hours+':'+minutes+':'+seconds;
+            return time;
+        }
+    };
+    
     var Ticker = function (element, options) {
         
         this.name = options.name;
@@ -56,25 +63,21 @@
         this.element = element;
         this.durationContainer = this.element.getElementsByClassName("ticker-duration")[0];
         this.duration = options.duration || 0;
-        this.paused = true;
+        this.paused = options.paused || true;
         
         // store
         tickerStorage.create(this.name, {"duration": this.duration, "displayName": this.displayName});
         
-        this.init();
-    }
-    
-    Ticker.prototype.init = function () {
-        this.play.call(this);
+        // if pause option was passed, don't play the ticker
+        if (!options.paused) {
+             this.play.call(this);
+        }
     };
-    
+
     Ticker.prototype.tick = function () {
         if (!this.paused) {
             this.duration++;
-            
-            //tickerStorage.setDuration(this.name, this.duration);
-            
-            this.durationContainer.innerHTML = this.toHHMMSS( this.duration );
+            this.durationContainer.innerHTML = utils.toHHMMSS( this.duration );
             this.timeout = setTimeout( this.tick.bind(this), 1000);
         }
     };
@@ -96,31 +99,17 @@
         
         tickerStorage.delete(this.name);
     };
-    
-    Ticker.prototype.toHHMMSS = function (sec_num) {
-        var hours   = Math.floor(sec_num / 3600);
-        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-        var seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-        if (hours   < 10) {hours   = "0"+hours;}
-        if (minutes < 10) {minutes = "0"+minutes;}
-        if (seconds < 10) {seconds = "0"+seconds;}
-        var time    = hours+':'+minutes+':'+seconds;
-        return time;
-    };
-    
+        
     var instances = [];
     
     window.initTicker = function (options) {
-    
+        
         options = options || {};
-        options.pauseExisting = options.pauseExisting || true;
+        options.pauseExisting = typeof options.pauseExisting==="boolean" ? options.pauseExisting : true;
         options.duration = options.duration || null;
-        //options.paused = options.paused || false;
         options.displayName = options.displayName || "";
         options.name = options.name || null;
         
-
         if (!options.name) {
             options.name = options.displayName.length === 0 ? "ticker-"+new Date().getTime() : options.displayName.replace(/\s/g,"-").toLowerCase();
         }
@@ -159,7 +148,7 @@
         // duration
         var durationContainer = document.createElement("h3");
         durationContainer.className = "ticker-duration";
-        if (!!options.duration) { durationContainer.innerHTML = options.duration; }
+        if (!!options.duration) { durationContainer.innerHTML = utils.toHHMMSS(options.duration); }
         
         // name
         var nameContainer = document.createElement("h3");
@@ -214,7 +203,7 @@
             duration = tickerStorage.getDuration(name);
             displayName = tickerStorage.getDisplayName(name);
             
-            initTicker({ "name": name, "duration": duration, "displayName": displayName });
+            initTicker({ "name": name, "duration": duration, "displayName": displayName, "paused": true });
         }
     });
     
