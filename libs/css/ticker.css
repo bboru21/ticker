@@ -2,7 +2,7 @@
 	margin:0px auto;
 	width: 600px;
 }
-#ticker-container form, #ticker-container li {
+#ticker-container form, #ticker-container div {
 	margin: 5px;
 }
 #ticker-list button {
@@ -16,17 +16,17 @@
 	float: none;
 }
 
-#ticker-list li {
+#ticker-list div {
 	border-radius: 5px;
     /*box-shadow: 2px 3px 2px rgba(0,0,0,0.2);*/
 }
 
-#ticker-list li.active {
+#ticker-list div.active {
 	border: 1px solid #CCC;
 	background-color: transparent;
 }
 
-#ticker-list li.passive {
+#ticker-list div.passive {
 	border: 1px dotted #CCC;
 	background-color: #F5F5F5;
 }
