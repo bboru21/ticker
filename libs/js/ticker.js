@@ -155,7 +155,10 @@
         nameContainer.className = "ticker-name";
         
         if (options.displayName.length > 0) { nameContainer.innerHTML = "&nbsp;-&nbsp;"; }
-        nameContainer.appendChild( document.createTextNode(options.displayName));
+        
+        var displayName = (options.displayName.length > 25) ? options.displayName.substring(0,22) + "..." : options.displayName;
+        nameContainer.appendChild( document.createTextNode(displayName));
+        nameContainer.setAttribute("title", options.displayName);
         
         // clear button
         var clearButton = document.createElement("button");
